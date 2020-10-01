@@ -13,6 +13,10 @@
 .postBlockText {
     margin-left: 10px;
 }
-.postBlockRating a{
+.postBlockRating .rating{
     margin: 10px;
+}
+.postBlockRating .rating span{
+    color: blue;
+    cursor: pointer;
 }

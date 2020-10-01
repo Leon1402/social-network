@@ -15,3 +15,27 @@
     grid-area: m;
     background-color: burlywood;
 }
+textarea {
+    box-sizing: border-box;
+    resize: none;
+    height: 30px;
+    width: 250px;
+    max-height: 100px;
+    overflow: hidden;
+    outline: none;
+    border-radius: 20px;
+    padding: 5px 20px;
+}
+button {
+    border-radius: 20px;
+    outline: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+}
+button:hover{
+    background: rgba(200, 200, 200);
+}
+button:active{
+    background: rgba(150, 150, 150);
+}

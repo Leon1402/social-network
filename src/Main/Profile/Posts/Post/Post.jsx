@@ -10,8 +10,14 @@ const Post = (props) => {
                     {props.text}
                 </div>
                 <div className={s.postBlockRating}>
-                    <a href="">Like</a><span>{props.like}</span>
-                    <a href="">Dislike</a><span>{props.dislike}</span>
+                    <span className={s.rating}>
+                        <span>Like </span>
+                        {props.like}
+                    </span>
+                    <span className={s.rating}>
+                        <span>Dislike </span>
+                        {props.dislike}
+                    </span>
                 </div>
             </div>
         </div>
