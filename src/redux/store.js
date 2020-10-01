@@ -31,16 +31,16 @@ let store = {
             newMessageText: ""
         }
     },
-    _subscribers() { console.log("No subscribers") },
+    _callSubscriber() { console.log("No subscribers") },
     
-    subscribe(observer) {this._subscribers = observer},
+    subscribe(observer) {this._callSubscriber = observer},
     getState() { return this._state },
 
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._subscribers();
+        this._callSubscriber();
     }
 };
 
-export default store;
+export default store; 

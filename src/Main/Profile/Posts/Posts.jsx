@@ -11,7 +11,10 @@ const Posts = (props) => {
     let newPostElement = React.createRef();
 
     let addNewPost = () => {
-        props.dispatch(addPostAC());
+        let text = newPostElement.current.value;
+        if (text) props.dispatch(addPostAC());
+        else alert("Enter text!!!");
+        
     }
     let changeNewPost = () => {
         let text = newPostElement.current.value
