@@ -28,7 +28,12 @@ const dialogsReducer = (state = initialState, action) => {
             };
             return {
                 ...state,
+<<<<<<< HEAD
                 messages: [...state.messages, newMessage]
+=======
+                messages: [...state.messages, newMessage],
+                newMessageText: ''
+>>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
             }
         case CHANGE_NEW_MESSAGE:
             return {

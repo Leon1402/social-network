@@ -22,7 +22,11 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [...state.posts, newPost],
+<<<<<<< HEAD
                 newPostText: ""
+=======
+                newPostText: ''
+>>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
             }
         case CHANGE_NEW_POST:
             return {
@@ -32,6 +36,10 @@ const profileReducer = (state = initialState, action) => {
         default:
             return state;
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
 };
 
 export const addPostAC = () => ({ type: ADD_POST });

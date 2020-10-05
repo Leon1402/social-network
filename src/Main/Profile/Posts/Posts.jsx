@@ -1,10 +1,12 @@
 import React from 'react';
-import { addPostAC, changeNewPostAC } from '../../../redux/profileReducer';
 import Post from './Post/Post';
 import s from './Posts.module.css';
 
 const Posts = (props) => {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
     let postsElements = props.posts.map(post =>
         <Post like={post.like} dislike={post.dislike} text={post.text} />)
 
@@ -12,8 +14,12 @@ const Posts = (props) => {
 
     let addNewPost = () => {
         let text = newPostElement.current.value;
+<<<<<<< HEAD
        props.addNewPost(text);
         
+=======
+        props.addNewPost(text);        
+>>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
     }
     let changeNewPost = () => {
         let text = newPostElement.current.value
