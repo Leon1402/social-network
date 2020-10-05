@@ -19,16 +19,20 @@ const profileReducer = (state = initialState, action) => {
                 dislike: 0,
                 text: state.newPostText
             };
-            state.newPostText = "";
-            state.posts.push(newPost);
-            break;
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ''
+            }
         case CHANGE_NEW_POST:
-            state.newPostText = action.text;
-            break;
+            return {
+                ...state,
+                newPostText: action.text
+            }
         default:
-            break;
+            return state;
     }
-    return state;
+    
 };
 
 export const addPostAC = () => ({ type: ADD_POST });

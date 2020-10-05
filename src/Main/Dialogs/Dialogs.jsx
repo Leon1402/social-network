@@ -1,5 +1,4 @@
 import React from 'react';
-import { addMessageAC, changeNewMessageAC } from '../../redux/dialogsReducer';
 import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.css'
 import Message from './Message/Message';
@@ -16,14 +15,12 @@ const Dialogs = (props) => {
 
     let addNewMessage = () => {
         let text = newMessageElement.current.value;
-        if (text) props.dispatch(addMessageAC());
-        else alert("Enter text!!!");
+        props.addNewMessage(text);
     }   
     let changeNewMessage = () => {
         let text = newMessageElement.current.value;
-        props.dispatch(changeNewMessageAC(text));
+        props.changeNewMessage(text);
     }
-    console.log(props)
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

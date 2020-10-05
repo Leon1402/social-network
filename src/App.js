@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Header from './Header/Header';
-import Dialogs from './Main/Dialogs/Dialogs';
+import DialogsContainer from './Main/Dialogs/DialogsContainer';
 import Profile from './Main/Profile/Profile';
+import UsersContainer from './Main/Users/UsersContainer';
 import Navbar from './Navbar/Navbar';
 
 const App = (props) => {
@@ -13,13 +14,9 @@ const App = (props) => {
                 <Header />
                 <Navbar />
                 <div className='main'>
-                    <Route path='/Profile' render={() => <Profile
-                        state={props.state.profilePage}
-                        dispatch={props.dispatch} />} />
-
-                    <Route path='/Dialogs' render={() => <Dialogs
-                        state={props.state.dialogsPage}
-                        dispatch={props.dispatch} />} />
+                    <Route path='/Profile' render={() => <Profile/>} />
+                    <Route path='/Dialogs' render={() => <DialogsContainer/>} />
+                    <Route path='/Users' render={() => <UsersContainer/>} />
                 </div>
             </div>
         </BrowserRouter>
