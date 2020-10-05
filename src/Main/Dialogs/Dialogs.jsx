@@ -16,14 +16,12 @@ const Dialogs = (props) => {
 
     let addNewMessage = () => {
         let text = newMessageElement.current.value;
-        if (text) props.dispatch(addMessageAC());
-        else alert("Enter text!!!");
+        props.addNewMessage(text);
     }   
     let changeNewMessage = () => {
         let text = newMessageElement.current.value;
-        props.dispatch(changeNewMessageAC(text));
+        props.changeNewMessage(text);
     }
-    console.log(props)
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
