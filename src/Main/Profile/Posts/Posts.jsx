@@ -3,8 +3,8 @@ import Post from './Post/Post';
 import s from './Posts.module.css';
 
 const Posts = (props) => {
-    let postsElements = props.posts.map(post =>
-        <Post like={post.like} dislike={post.dislike} text={post.text} />)
+    let postsElements = props.posts.map((post, i)=>
+        <Post key={i} like={post.like} dislike={post.dislike} text={post.text} />)
 
     let newPostElement = React.createRef();
 

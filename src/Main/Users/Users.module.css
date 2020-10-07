@@ -6,16 +6,31 @@
 .userName {
     vertical-align: top;  
     margin-right: 20px;
-    width: 150px;
+    width: 100px;
 }
 .userName img {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
 }
 .userInfo {
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
-.userInfo div {
-    margin-bottom: 5px;
+
+.page {
+    padding: 0 5px;
+    cursor: pointer;
+}
+.page:hover {
+    color: grey;
+}
+.active {
+    color: grey;
+    border-bottom: 2px solid grey;
+}
+a {
+    color: black;
+    text-decoration: none;
 }

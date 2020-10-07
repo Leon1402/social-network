@@ -1,15 +1,16 @@
-
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
+const SET_ISLOADING = 'SET_ISLOADING';
 
 let initialState = {
     users: [],
     pageSize: 10,
     currentPage: 1,
-    totalCount: 100
+    totalCount: 0,
+    isLoading: false
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -19,7 +20,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((u) => {
                     if (u.id === action.userId)
-                        return { ...u, isFriend: true };
+                        return { ...u, followed: true };
                     return u;
                 })
             }
@@ -28,7 +29,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((u) => {
                     if (u.id === action.userId)
-                        return { ...u, isFriend: false };
+                        return { ...u, followed: false };
                     return u;
                 })
             }
@@ -46,6 +47,11 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 totalCount: action.totalCount
+            }
+        case SET_ISLOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading
             }
         default:
             return state;
@@ -73,4 +79,9 @@ export const setTotalCountAC = count => ({
     type: SET_TOTAL_COUNT,
     totalCount: count
 })
+export const setIsLoadingAC = isLoading => ({
+    type: SET_ISLOADING,
+    isLoading
+})
+
 export default usersReducer;
