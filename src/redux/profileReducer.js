@@ -1,3 +1,5 @@
+import { UsersAxios } from "../api/api";
+
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_POST = "CHANGE-NEW-POST";
 const SET_PROFILE_INFO = "SET_PROFILE_INFO";
@@ -44,5 +46,12 @@ const profileReducer = (state = initialState, action) => {
 export const setProfileInfo = (profile) => ({ type: SET_PROFILE_INFO, profile })
 export const addPostAC = () => ({ type: ADD_POST });
 export const changeNewPostAC = text => ({ type: CHANGE_NEW_POST, text: text });
+
+export const getProfileInfoThunkCreator = userId => dispatch => {
+    UsersAxios.getProfileInfo(userId)
+    .then(data => {
+        dispatch(setProfileInfo(data))
+    });
+}
 
 export default profileReducer;

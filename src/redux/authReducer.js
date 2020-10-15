@@ -1,3 +1,5 @@
+import { AuthAxios } from "../api/api";
+
 const SET_AUTH_DATA = "SET_AUTH_DATA"
 
 let initialState = {
@@ -22,5 +24,12 @@ export const setAuthData = (data) => ({
     type: SET_AUTH_DATA,
     data
 })
+
+export const getAuthDataThunkCreator = () => dispatch => {
+    AuthAxios.setAuthData()
+            .then(data => {
+                dispatch(setAuthData(data.data))
+            });
+}
 
 export default authReducer;

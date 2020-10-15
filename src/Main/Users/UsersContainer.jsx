@@ -1,28 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, unfollow, setUsers, setTotalCount, setCurrentPage, changeIsloading, changeIsFollowed } from '../../redux/usersReducer';
+import { followTnunkCreator, unfollowTnunkCreator, getUsersThunkCreator} from '../../redux/usersReducer';
 import Users from './Users';
-import { UsersAxios } from '../../api/api';
 import Loader from '../../common/Loader';
 
 class UsersAPI extends React.Component {
     componentDidMount() {
-        this.props.changeIsloading(true);
-        UsersAxios.getUsers(this.props.pageSize, this.props.currentPage)
-        .then(data => {
-                this.props.changeIsloading(false);
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount / 20)
-            });
+        this.props.getUsersThunkCreator(this.props.pageSize, this.props.currentPage)
     }
     changeCurrentPage(p) {
-        this.props.changeIsloading(true);
-        this.props.setCurrentPage(p);
-        UsersAxios.getUsers(this.props.pageSize, p)
-        .then(data => {
-                this.props.changeIsloading(false);
-                this.props.setUsers(data.items);
-            });
+        this.props.getUsersThunkCreator(this.props.pageSize, p)
     }
     render() {
         let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
@@ -36,10 +23,9 @@ class UsersAPI extends React.Component {
             currentPage={this.props.currentPage}
             changeCurrentPage ={this.changeCurrentPage.bind(this)}
             users={this.props.users}
-            follow={this.props.follow}
-            unfollow={this.props.unfollow}
             isFollowed={this.props.isFollowed}
-            changeIsFollowed={this.props.changeIsFollowed}/>
+            followTnunkCreator={this.props.followTnunkCreator}
+            unfollowTnunkCreator={this.props.unfollowTnunkCreator}/>
     }
 }
 
@@ -53,6 +39,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-    follow, unfollow, setUsers, setCurrentPage, 
-    setTotalCount, changeIsloading, changeIsFollowed
+    getUsersThunkCreator, followTnunkCreator, unfollowTnunkCreator
 })(UsersAPI);

@@ -1,4 +1,4 @@
-import { act } from "react-dom/test-utils";
+import { UsersAxios } from "../api/api";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -61,8 +61,8 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFollowed: action.isFollow
-                    ?[...state.isFollowed, action.userId]
-                    :state.isFollowed.filter(u => u!=action.userId )
+                    ? [...state.isFollowed, action.userId]
+                    : state.isFollowed.filter(u => u != action.userId)
             }
         default:
             return state;
@@ -96,4 +96,33 @@ export const changeIsFollowed = (userId, isFollow) => ({
     userId,
     isFollow
 });
+
+export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch) => {
+    dispatch(changeIsloading(true));
+    UsersAxios.getUsers(pageSize, currentPage)
+        .then(data => {
+            dispatch(changeIsloading(false));
+            dispatch(setUsers(data.items));
+            dispatch(setTotalCount(data.totalCount / 20));
+            dispatch(setCurrentPage(currentPage))
+        });
+}
+export const followTnunkCreator = (id) => (dispatch) => {
+    dispatch(changeIsFollowed(id, true));
+    UsersAxios.follow(id)
+        .then(data => {
+            dispatch(changeIsFollowed(id, false));
+            if (!data.resultCode)
+                dispatch(follow(id));
+        });
+}
+export const unfollowTnunkCreator = (id) => (dispatch) => {
+    dispatch(changeIsFollowed(id, true));
+    UsersAxios.unfollow(id)
+        .then(data => {
+            dispatch(changeIsFollowed(id, false));
+            if (!data.resultCode)
+                dispatch(unfollow(id));
+        });
+}
 export default usersReducer;

@@ -34,26 +34,9 @@ let Users = (props) => {
                             <div>
                                 {u.followed
                                     ? <button disabled={props.isFollowed.some(s => s == u.id)}
-                                        onClick={() => {
-                                            props.changeIsFollowed(u.id, true);
-                                            UsersAxios.unfollow(u.id)
-                                                .then(data => {
-                                                    props.changeIsFollowed(u.id, false);
-                                                    if(!data.resultCode)
-                                                        props.unfollow(u.id);
-                                                })
-
-                                        }}>Unfollow</button>
+                                        onClick={() => props.unfollowTnunkCreator(u.id)}>Unfollow</button>
                                     : <button disabled={props.isFollowed.some(s => s == u.id)}
-                                        onClick={() => {
-                                            props.changeIsFollowed(u.id, true);
-                                            UsersAxios.follow(u.id)
-                                                .then(data => {
-                                                    props.changeIsFollowed(u.id, false);
-                                                    if(!data.resultCode)
-                                                        props.follow(u.id)
-                                                })
-                                        }}>Follow</button>
+                                        onClick={() => props.followTnunkCreator(u.id)}>Follow</button>
                                 }
                             </div>
                         </div>
