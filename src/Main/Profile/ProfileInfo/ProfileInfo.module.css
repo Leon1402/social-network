@@ -1,0 +1,13 @@
+.profileInfo {
+    padding: 10px;
+    display: flex;
+}
+.avatar {
+    margin-right: 50px;
+}
+.info>div {
+    font-weight: bold;
+}
+.contacts>div{
+    margin-left: 40px;
+}

@@ -1,0 +1,37 @@
+.loader {
+    width: 50px;
+    height: 50px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.loaderItem {
+    transform: scaleY(0.5);
+    background-color: #fff;
+    width: 13%;
+    height: 100%;
+    animation: loader .6s linear 0s infinite alternate;
+}
+.loaderItem2 {
+    animation: loader .6s linear .2s infinite alternate;
+}
+.loaderItem3 {
+    animation: loader .6s linear .4s infinite alternate;
+}
+.loaderItem4 {
+    animation: loader .6s linear .6s infinite alternate;
+}
+.loaderItem5 {
+    animation: loader .6s linear .8s infinite alternate;
+}
+@keyframes loader {
+    0% {
+        transform: scaleY(0.5);
+    }
+    60% {
+        transform: scaleY(0.5);
+    }
+    100%{
+        transform: scaleY(1);
+    }
+}

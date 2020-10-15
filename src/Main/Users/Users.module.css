@@ -19,3 +19,10 @@
 .userInfo div {
     margin-bottom: 5px;
 }
+.page {
+    margin: 5px;
+    cursor: pointer;
+}
+.active {
+    font-weight: bold;
+}

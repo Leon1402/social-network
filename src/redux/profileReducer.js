@@ -1,7 +1,9 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_POST = "CHANGE-NEW-POST";
+const SET_PROFILE_INFO = "SET_PROFILE_INFO";
 
 let initialState = {
+    profile: null,
     posts: [
         { like: 10, dislike: 0, text: "Hello" },
         { like: 20, dislike: 1, text: "How are you" },
@@ -22,26 +24,24 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-<<<<<<< HEAD
-                newPostText: ""
-=======
                 newPostText: ''
->>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
             }
         case CHANGE_NEW_POST:
             return {
                 ...state,
                 newPostText: action.text
             }
+        case SET_PROFILE_INFO:
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state;
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 8ff74818cdd78ff7201c2d2a9bb126e891c0c8c9
-};
 
+};
+export const setProfileInfo = (profile) => ({ type: SET_PROFILE_INFO, profile })
 export const addPostAC = () => ({ type: ADD_POST });
 export const changeNewPostAC = text => ({ type: CHANGE_NEW_POST, text: text });
 

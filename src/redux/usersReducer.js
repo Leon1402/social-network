@@ -1,15 +1,20 @@
+import { act } from "react-dom/test-utils";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
+const CHANGE_IS_LOADING = 'CHANGE_IS_LOADING';
+const CHANGE_IS_FOLLOWED = 'CHANGE_IS_FOLLOWED';
 
 let initialState = {
     users: [],
-    pageSize: 10,
+    pageSize: 20,
     currentPage: 1,
-    totalCount: 100
+    totalCount: 100,
+    isLoading: false,
+    isFollowed: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -19,7 +24,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((u) => {
                     if (u.id === action.userId)
-                        return { ...u, isFriend: true };
+                        return { ...u, followed: true };
                     return u;
                 })
             }
@@ -28,7 +33,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: state.users.map((u) => {
                     if (u.id === action.userId)
-                        return { ...u, isFriend: false };
+                        return { ...u, followed: false };
                     return u;
                 })
             }
@@ -47,30 +52,48 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 totalCount: action.totalCount
             }
+        case CHANGE_IS_LOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
+        case CHANGE_IS_FOLLOWED:
+            return {
+                ...state,
+                isFollowed: action.isFollow
+                    ?[...state.isFollowed, action.userId]
+                    :state.isFollowed.filter(u => u!=action.userId )
+            }
         default:
             return state;
     }
 
 };
 
-export const followAC = userId => ({
+export const follow = userId => ({
     type: FOLLOW,
     userId
 });
-export const unfollowAC = userId => ({
+export const unfollow = userId => ({
     type: UNFOLLOW,
     userId
 });
-export const setUsersAC = users => ({
+export const setUsers = users => ({
     type: SET_USERS,
     users
 });
-export const setCurrentPageAC = page => ({
+export const setCurrentPage = page => ({
     type: SET_CURRENT_PAGE,
     page
 })
-export const setTotalCountAC = count => ({
+export const setTotalCount = count => ({
     type: SET_TOTAL_COUNT,
     totalCount: count
-})
+});
+export const changeIsloading = isLoading => ({ type: CHANGE_IS_LOADING, isLoading });
+export const changeIsFollowed = (userId, isFollow) => ({
+    type: CHANGE_IS_FOLLOWED,
+    userId,
+    isFollow
+});
 export default usersReducer;
