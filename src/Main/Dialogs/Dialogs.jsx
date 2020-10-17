@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.css'
 import Message from './Message/Message';

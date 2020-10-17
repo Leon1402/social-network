@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from '../../../common/Loader';
 import s from './ProfileInfo.module.css';
+import StatusProfile from './StatusProfile/StatusProfile';
 
 const ProfileInfo = (props) => {
     if (!props.profile)
@@ -13,6 +14,7 @@ const ProfileInfo = (props) => {
                     : 'https://vk-wiki.ru/wp-content/uploads/2019/04/male-user-profile-picture.png'} />
             </div>
             <div className={s.info}>
+                <StatusProfile />
                 <div>fullName: {props.profile.fullName}</div>
                 <div>aboutMe: {props.profile.aboutMe}</div>
                 <div>lookingForAJob</div>

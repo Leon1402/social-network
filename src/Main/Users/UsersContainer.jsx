@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { followTnunkCreator, unfollowTnunkCreator, getUsersThunkCreator} from '../../redux/usersReducer';
 import Users from './Users';
 import Loader from '../../common/Loader';
+import { compose } from 'redux';
 
-class UsersAPI extends React.Component {
+class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.getUsersThunkCreator(this.props.pageSize, this.props.currentPage)
     }
-    changeCurrentPage(p) {
+    changeCurrentPage = (p) => {
         this.props.getUsersThunkCreator(this.props.pageSize, p)
     }
     render() {
@@ -21,7 +22,7 @@ class UsersAPI extends React.Component {
         :<Users totalCount={this.props.totalCount}
             pageSize = {this.props.pageSize}
             currentPage={this.props.currentPage}
-            changeCurrentPage ={this.changeCurrentPage.bind(this)}
+            changeCurrentPage={this.changeCurrentPage}
             users={this.props.users}
             isFollowed={this.props.isFollowed}
             followTnunkCreator={this.props.followTnunkCreator}
@@ -38,6 +39,6 @@ const mapStateToProps = (state) => ({
     isFollowed: state.usersPage.isFollowed
 });
 
-export default connect(mapStateToProps, {
-    getUsersThunkCreator, followTnunkCreator, unfollowTnunkCreator
-})(UsersAPI);
+export default compose(
+    connect(mapStateToProps, {getUsersThunkCreator, followTnunkCreator, unfollowTnunkCreator})
+)(UsersContainer)

@@ -6,7 +6,6 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 const Profile = (props) => {
     return (
         <div className={s.profile}>
-            <img src='https://images.freeimages.com/images/large-previews/4e1/free-technical-background-design-1635196.jpg' />
             <ProfileInfo profile={props.profile}/>
             <PostsContainer/>
         </div>
