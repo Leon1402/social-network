@@ -14,7 +14,7 @@ const ProfileInfo = (props) => {
                     : 'https://vk-wiki.ru/wp-content/uploads/2019/04/male-user-profile-picture.png'} />
             </div>
             <div className={s.info}>
-                <StatusProfile />
+                <StatusProfile status={props.status} updateStatus={props.updateStatus}/>
                 <div>fullName: {props.profile.fullName}</div>
                 <div>aboutMe: {props.profile.aboutMe}</div>
                 <div>lookingForAJob</div>
