@@ -1,7 +1,6 @@
 import { ProfileAxios } from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const CHANGE_NEW_POST = "CHANGE-NEW-POST";
 const SET_PROFILE_INFO = "SET_PROFILE_INFO";
 const SET_STATUS = "SET_STATUS";
 
@@ -13,7 +12,6 @@ let initialState = {
         { like: 7, dislike: 5, text: "What are you doing" },
         { like: 3, dislike: 2, text: "Do you know the way???" }
     ],
-    newPostText: "",
     status: ""
 };
 
@@ -23,18 +21,14 @@ const profileReducer = (state = initialState, action) => {
             let newPost = {
                 like: 0,
                 dislike: 0,
-                text: state.newPostText
+                text: action.text
             };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: ''
             }
-        case CHANGE_NEW_POST:
-            return {
-                ...state,
-                newPostText: action.text
-            }
+
         case SET_PROFILE_INFO:
             return {
                 ...state,
@@ -51,8 +45,8 @@ const profileReducer = (state = initialState, action) => {
 
 };
 export const setProfileInfo = (profile) => ({ type: SET_PROFILE_INFO, profile })
-export const addPostAC = () => ({ type: ADD_POST });
-export const changeNewPostAC = text => ({ type: CHANGE_NEW_POST, text: text });
+export const addNewPost = (text) => ({ type: ADD_POST, text });
+
 export const setStatus = status => ({ type: SET_STATUS, status });
 export const Status = status => ({ type: SET_STATUS, status });
 

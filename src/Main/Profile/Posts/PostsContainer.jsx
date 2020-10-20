@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPostAC, changeNewPostAC } from '../../../redux/profileReducer';
+import { addNewPost } from '../../../redux/profileReducer';
 import Posts from './Posts';
 
 const mapStateToProps = (state) => ({
@@ -7,16 +7,7 @@ const mapStateToProps = (state) => ({
     newPostText: state.profilePage.newPostText
     }
 );
-const mapDispatchToProps = (dispatch) => ({
-    addNewPost(text) {
-        if (text) dispatch(addPostAC());
-        else alert("Enter text!!!");
-    },
-    changeNewPost(text) {
-        dispatch(changeNewPostAC(text));
-    }
-});
 
-const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts)
+const PostsContainer = connect(mapStateToProps, {addNewPost})(Posts)
 
 export default PostsContainer;

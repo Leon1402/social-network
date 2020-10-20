@@ -8,8 +8,9 @@ const Header = (props) => {
             <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1004px-Google_%22G%22_Logo.svg.png'
                 alt='picture' />
             <div className={s.login}>
-                {props.login? props.login:<NavLink to='/login'>Login</NavLink>}
-                
+                {props.login
+                    ? <>{props.login + ' '}<button onClick={props.logOut}>Log out</button> </>
+                    :<NavLink to='/login'>Login</NavLink>}
             </div>
         </div>
     );

@@ -15,7 +15,6 @@ const authReducer = (state = initialState, action) => {
         case SET_AUTH_DATA:
             return {
                 ...state, ...action.data,
-                isAuth: true
             }
         default:
             return state;
@@ -23,23 +22,23 @@ const authReducer = (state = initialState, action) => {
 
 };
 
-export const setAuthData = (data) => ({
+export const setAuthData = (id, email, login, isAuth) => ({
     type: SET_AUTH_DATA,
-    data
+    data: {id, email, login, isAuth}
 })
 
 export const getAuthData = () => dispatch => {
     AuthAxios.setAuthData()
             .then(data => {
                 if (data.resultCode === 0)
-                    dispatch(setAuthData(data.data))
+                    dispatch(setAuthData(data.data.id, data.data.email, data.data.login, true))
             });
 }
 export const logIn = properties => dispatch => {
     AuthAxios.logIn(properties)
         .then(data => {
-            if(data.resultCode)
-                console.log('error')
+            if(data.resultCode === 1)
+               alert(data.messages)
             else
                 dispatch(getAuthData())
         })
@@ -50,7 +49,6 @@ export const logOut = properties => dispatch => {
             if(data.resultCode)
                 console.log('error')
             else{
-                console.log(data)
                 dispatch(setAuthData({id: null,
                     email: null,
                     login: null,

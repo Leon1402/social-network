@@ -1,39 +1,45 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { Textarea } from '../../../common/FormControl';
+import { isFilled, maxLength } from '../../../utils/validators';
 import Post from './Post/Post';
 import s from './Posts.module.css';
 
 const Posts = (props) => {
 
     let postsElements = props.posts.map((post, i) =>
-        <Post like={post.like} dislike={post.dislike} text={post.text} key={i}/>)
+        <Post like={post.like} dislike={post.dislike} text={post.text} key={i} />)
 
-    let newPostElement = React.createRef();
+    let addNewPost = (value) => {
+        props.addNewPost(value.newPostText);
+    }
 
-    let addNewPost = () => {
-        let text = newPostElement.current.value;
-       props.addNewPost(text);
-        
-    }
-    let changeNewPost = () => {
-        let text = newPostElement.current.value
-        props.changeNewPost(text);
-    }
     return (
         <div className={s.Posts}>
-            <div className={s.newPost}>
-                <textarea ref={newPostElement}
-                    value={props.newPostText}
-                    placeholder="Enter new post"
-                    onChange={changeNewPost}/>
-                <div>
-                    <button onClick={addNewPost}>Add new post</button>
-                </div>
-            </div>
+            <NewPostForm onSubmit={addNewPost} />
             <div className={s.PostsElement}>
                 {postsElements}
             </div>
         </div>
     );
 }
+
+const maxInputLength = maxLength(50) 
+
+let NewPostForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field placeholder='Enter new post'
+                name='newPostText'
+                component={Textarea}
+                validate={[isFilled, maxInputLength]}/>
+            <div>
+                <button>Add new post</button>
+            </div>
+        </form>
+    )
+}
+
+NewPostForm = reduxForm({ form: 'NewPostForm' })(NewPostForm)
 
 export default Posts;

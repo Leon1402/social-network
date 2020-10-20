@@ -13,6 +13,9 @@
 .messagesItem {
     margin-bottom: 10px;
 }
-.newMessage {
-
+.dialogs form {
+    display: flex;
+}
+.dialogs form textarea {
+    margin-right: 10px;
 }

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { Textarea } from '../../common/FormControl';
+import { isFilled, maxLength } from '../../utils/validators';
 import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.css'
 import Message from './Message/Message';
@@ -7,20 +9,13 @@ import Message from './Message/Message';
 const Dialogs = (props) => {
 
     let dialogsElements = props.state.dialogs.map(item =>
-        <Dialog name={item.name} id={item.id} key={item.id}/>)
-
+        <Dialog name={item.name} id={item.id} key={item.id} />)
+        
     let messagesElements = props.state.messages.map(item =>
-        <Message message={item.message} id={item.id} key={item.id}/>)
+        <Message message={item.message} id={item.id} key={item.id} />)
 
-    let newMessageElement = React.createRef();
-
-    let addNewMessage = () => {
-        let text = newMessageElement.current.value;
-        props.addNewMessage(text);
-    }   
-    let changeNewMessage = () => {
-        let text = newMessageElement.current.value;
-        props.changeNewMessage(text);
+    let addNewMessage = (value) => {
+        props.addNewMessage(value.newMessage);
     }
     return (
         <div className={s.dialogs}>
@@ -31,15 +26,21 @@ const Dialogs = (props) => {
                 <div className={s.messagesItem}>
                     {messagesElements}
                 </div>
-                <div className={s.newMessage}>
-                    <textarea ref={newMessageElement} 
-                    value={props.state.newMessageText}
-                    onChange={changeNewMessage}/>
-                    <button onClick={addNewMessage}>Send</button>
-                </div>
+                <NewMessageForm onSubmit={addNewMessage}/>
             </div>
         </div>
     )
 }
+const maxLengthField = maxLength(50)
+let NewMessageForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field name='newMessage' placeHolder='Enter New Message' 
+            component={Textarea} validate={[isFilled,maxLengthField]}/>
+            <button>Send</button>
+        </form>
+    )
+}
+NewMessageForm = reduxForm({form: 'newMessageForm'})(NewMessageForm)
 
 export default Dialogs;
