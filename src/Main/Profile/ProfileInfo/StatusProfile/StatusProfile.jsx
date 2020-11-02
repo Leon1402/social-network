@@ -1,50 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './../ProfileInfo.module.css';
 
-class StatusProfile extends React.Component {
-    state = {
-        activeBar: false,
-        status: this.props.status
+const StatusProfile = (props) => {
+    let [status, setStatus] = useState(props.status);
+    let [activeBar, setActiveBar] = useState(false);
+
+    useEffect(()=> {
+        setStatus(props.status)
+    }, [props.status])
+
+    let activeStatusBar = () => {
+        setActiveBar(true)
     }
-    activeStatusBar = () => {
-        this.setState({
-            activeBar: true
-        })
+    let deactiveStatusBar = () => {
+        setActiveBar(false)
+        props.updateStatus(status)
     }
-    deactiveStatusBar = () => {
-        this.setState({
-            activeBar: false
-        })
-        this.props.updateStatus(this.state.status)
+    let changeStatusText = (e) => {
+        setStatus(e.currentTarget.value)
     }
-    changeStatusText = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-    componentDidUpdate(prevProps) {
-        if (prevProps.status !== this.props.status)
-            this.setState({
-                status: this.props.status
-            })
-    }
-    render() {
-        return (
-            <div className={s.statusProfile}>
-                {!this.state.activeBar ?
-                    <div className={s.status}>
-                        <span onClick={this.activeStatusBar}>{this.props.status || '-----'}</span>
-                    </div>
-                    : <div>
-                        <input
-                            onChange={this.changeStatusText}
-                            autoFocus
-                            onBlur={this.deactiveStatusBar}
-                            value={this.state.status} />
-                    </div>}
-            </div>
-        );
-    }
+
+    return (
+        <div className={s.statusProfile} >
+            {!activeBar ?
+                <div className={s.status}>
+                    <span onClick={activeStatusBar}>{props.status || '-----'}</span>
+                </div>
+                : <div>
+                    <input
+                        onChange={changeStatusText}
+                        autoFocus
+                        onBlur={deactiveStatusBar}
+                        value={status} />
+                </div>
+            }
+        </div >
+    );
 }
 
 export default StatusProfile;

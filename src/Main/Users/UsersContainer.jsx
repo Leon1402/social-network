@@ -4,6 +4,7 @@ import { followTnunkCreator, unfollowTnunkCreator, getUsersThunkCreator} from '.
 import Users from './Users';
 import Loader from '../../common/Loader';
 import { compose } from 'redux';
+import { getAllUsers, getCurrentPage, getIsFollowed, getIsLoading, getPageSize, getTotalCount } from '../../redux/usersSelector';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -31,12 +32,12 @@ class UsersContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    currentPage: state.usersPage.currentPage,
-    totalCount: state.usersPage.totalCount,
-    isLoading: state.usersPage.isLoading,
-    isFollowed: state.usersPage.isFollowed
+    users: getAllUsers(state),
+    pageSize: getPageSize(state),
+    currentPage: getCurrentPage(state),
+    totalCount: getTotalCount(state),
+    isLoading: getIsLoading(state),
+    isFollowed: getIsFollowed(state)
 });
 
 export default compose(

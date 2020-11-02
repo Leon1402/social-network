@@ -7,7 +7,7 @@
 }
 .loaderItem {
     transform: scaleY(0.5);
-    background-color: #fff;
+    background-color: red;
     width: 13%;
     height: 100%;
     animation: loader .6s linear 0s infinite alternate;

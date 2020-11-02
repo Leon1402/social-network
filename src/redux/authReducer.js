@@ -1,4 +1,4 @@
-import { Redirect } from "react-router-dom";
+import { stopSubmit } from "redux-form";
 import { AuthAxios } from "../api/api";
 
 const SET_AUTH_DATA = "SET_AUTH_DATA"
@@ -19,26 +19,26 @@ const authReducer = (state = initialState, action) => {
         default:
             return state;
     }
-
 };
 
 export const setAuthData = (id, email, login, isAuth) => ({
     type: SET_AUTH_DATA,
-    data: {id, email, login, isAuth}
+    data: { id, email, login, isAuth }
 })
 
 export const getAuthData = () => dispatch => {
-    AuthAxios.setAuthData()
-            .then(data => {
-                if (data.resultCode === 0)
-                    dispatch(setAuthData(data.data.id, data.data.email, data.data.login, true))
-            });
+    return AuthAxios.setAuthData()
+        .then(data => {
+            if (data.resultCode === 0)
+                dispatch(setAuthData(data.data.id, data.data.email, data.data.login, true))
+        });
 }
 export const logIn = properties => dispatch => {
     AuthAxios.logIn(properties)
         .then(data => {
-            if(data.resultCode === 1)
-               alert(data.messages)
+            if (data.resultCode === 1) {
+                dispatch(stopSubmit('login', { _error: data.messages[0] }))
+            }
             else
                 dispatch(getAuthData())
         })
@@ -46,14 +46,16 @@ export const logIn = properties => dispatch => {
 export const logOut = properties => dispatch => {
     AuthAxios.logOut(properties)
         .then(data => {
-            if(data.resultCode)
+            if (data.resultCode)
                 console.log('error')
-            else{
-                dispatch(setAuthData({id: null,
+            else {
+                dispatch(setAuthData({
+                    id: null,
                     email: null,
                     login: null,
-                    isAuth: false}))
-                }
+                    isAuth: false
+                }))
+            }
         })
 }
 
