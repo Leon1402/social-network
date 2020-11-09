@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Textarea } from '../../common/FormControl';
+import { fieldForm, Textarea } from '../../common/FormControl';
 import { isFilled, maxLength } from '../../utils/validators';
 import Dialog from './Dialog/Dialog';
 import s from './Dialogs.module.css'
@@ -31,12 +31,13 @@ const Dialogs = (props) => {
         </div>
     )
 }
+
 const maxLengthField = maxLength(50)
+
 let NewMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field name='newMessage' placeHolder='Enter New Message' 
-            component={Textarea} validate={[isFilled,maxLengthField]}/>
+            {fieldForm('input','newMessage','Enter New Message',Textarea,[isFilled,maxLengthField])}
             <button>Send</button>
         </form>
     )

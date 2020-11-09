@@ -50,22 +50,18 @@ export const addNewPost = (text) => ({ type: ADD_POST, text });
 export const setStatus = status => ({ type: SET_STATUS, status });
 export const Status = status => ({ type: SET_STATUS, status });
 
-export const getProfileInfo = userId => dispatch => {
-    ProfileAxios.getProfileInfo(userId)
-        .then(data => {
-            dispatch(setProfileInfo(data))
-        });
+export const getProfileInfo = userId => async dispatch => {
+    let data = await ProfileAxios.getProfileInfo(userId)
+    dispatch(setProfileInfo(data))
 }
-export const getStatus = userId => dispatch => {
-    ProfileAxios.getStatus(userId)
-        .then(data => dispatch(setStatus(data)))
+export const getStatus = userId => async dispatch => {
+    let data = await ProfileAxios.getStatus(userId)
+    dispatch(setStatus(data))
 }
-export const updateStatus = status => dispatch => {
-    ProfileAxios.updateStatus(status)
-        .then(data => {
-            if (!data.resultCode)
-                dispatch(setStatus(status))
-        })
+export const updateStatus = status => async dispatch => {
+    let data = await ProfileAxios.updateStatus(status)
+    if (!data.resultCode)
+        dispatch(setStatus(status))
 }
 
 

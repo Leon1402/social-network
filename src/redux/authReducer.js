@@ -26,37 +26,31 @@ export const setAuthData = (id, email, login, isAuth) => ({
     data: { id, email, login, isAuth }
 })
 
-export const getAuthData = () => dispatch => {
-    return AuthAxios.setAuthData()
-        .then(data => {
-            if (data.resultCode === 0)
-                dispatch(setAuthData(data.data.id, data.data.email, data.data.login, true))
-        });
+export const getAuthData = () => async dispatch => {
+    let data = await AuthAxios.setAuthData()
+    if (data.resultCode === 0)
+        dispatch(setAuthData(data.data.id, data.data.email, data.data.login, true))
 }
-export const logIn = properties => dispatch => {
-    AuthAxios.logIn(properties)
-        .then(data => {
-            if (data.resultCode === 1) {
-                dispatch(stopSubmit('login', { _error: data.messages[0] }))
-            }
-            else
-                dispatch(getAuthData())
-        })
+
+export const logIn = properties => async dispatch => {
+    let data = await AuthAxios.logIn(properties)
+    if 
+        (data.resultCode === 0) dispatch(getAuthData())
+    else 
+        dispatch(stopSubmit('login', { _error: data.messages[0] }))
 }
-export const logOut = properties => dispatch => {
-    AuthAxios.logOut(properties)
-        .then(data => {
-            if (data.resultCode)
-                console.log('error')
-            else {
-                dispatch(setAuthData({
-                    id: null,
-                    email: null,
-                    login: null,
-                    isAuth: false
-                }))
-            }
-        })
+
+export const logOut = properties => async dispatch => {
+    let data = await AuthAxios.logOut(properties)
+    if (data.resultCode)
+        console.log('error')
+    else
+        dispatch(setAuthData({
+            id: null,
+            email: null,
+            login: null,
+            isAuth: false
+        }))
 }
 
 export default authReducer;

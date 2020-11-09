@@ -2,7 +2,6 @@
     padding-left: 10px;
 }
 .PostsElement {
-    display: flex;
-    flex-direction: column-reverse;
+    
 }
 

@@ -7,7 +7,7 @@ import s from './Posts.module.css';
 
 const Posts = (props) => {
 
-    let postsElements = props.posts.map((post, i) =>
+    let postsElements = [...props.posts].reverse().map((post, i) =>
         <Post like={post.like} dislike={post.dislike} text={post.text} key={i} />)
 
     let addNewPost = (value) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-import { Input } from '../../common/FormControl';
+import { fieldForm, Input } from '../../common/FormControl';
 import { logIn, logOut } from '../../redux/authReducer';
 import { maxLength, required } from '../../utils/validators';
 
@@ -11,18 +11,10 @@ const maxInputLength = maxLength(30)
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field type='input' name='email'
-                    placeholder='e-mail *' component={Input}
-                    validate={[required, maxInputLength]} />
-            </div>
-            <div>
-                <Field type='password' name='password' placeholder='password *'
-                    component={Input} validate={[required, maxInputLength]} />
-            </div>
-            <div>
-                <Field type='checkbox' name='rememberMe' component='input' />remember me
-            </div>
+            {fieldForm('input','email','e-mail *',Input,[required, maxInputLength])}
+            {fieldForm('password','password','password *',Input,[required, maxInputLength])}
+            {fieldForm('checkbox', 'rememberMe', null, 'input', null, {text: 'remember me'})}
+        
             <div>{props.error}</div>
             <div>
                 <button>Login</button>

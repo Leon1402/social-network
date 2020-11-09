@@ -1,4 +1,5 @@
 import { UsersAxios } from "../api/api";
+import { usersFollowed } from "../utils/oblectHelper";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -22,20 +23,12 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map((u) => {
-                    if (u.id === action.userId)
-                        return { ...u, followed: true };
-                    return u;
-                })
+                users: usersFollowed(state.users, action.userId, true)
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map((u) => {
-                    if (u.id === action.userId)
-                        return { ...u, followed: false };
-                    return u;
-                })
+                users: usersFollowed(state.users, action.userId, false)
             }
         case SET_USERS:
             return {
@@ -97,32 +90,25 @@ export const changeIsFollowed = (userId, isFollow) => ({
     isFollow
 });
 
-export const getUsersThunkCreator = (pageSize, currentPage) => (dispatch) => {
+export const getUsersThunkCreator = (pageSize, currentPage) => async dispatch => {
     dispatch(changeIsloading(true));
-    UsersAxios.getUsers(pageSize, currentPage)
-        .then(data => {
-            dispatch(changeIsloading(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalCount(data.totalCount / 20));
-            dispatch(setCurrentPage(currentPage))
-        });
+    let data = await UsersAxios.getUsers(pageSize, currentPage)
+
+    dispatch(changeIsloading(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalCount(data.totalCount / 20));
+    dispatch(setCurrentPage(currentPage))
 }
-export const followTnunkCreator = (id) => (dispatch) => {
+export const followUnfollowTC = async (dispatch, id, func, apiMethod) => {
     dispatch(changeIsFollowed(id, true));
-    UsersAxios.follow(id)
-        .then(data => {
-            dispatch(changeIsFollowed(id, false));
-            if (!data.resultCode)
-                dispatch(follow(id));
-        });
+    let data = await apiMethod(id)
+    if (!data.resultCode)
+        dispatch(func(id));
+    dispatch(changeIsFollowed(id, false));
 }
-export const unfollowTnunkCreator = (id) => (dispatch) => {
-    dispatch(changeIsFollowed(id, true));
-    UsersAxios.unfollow(id)
-        .then(data => {
-            dispatch(changeIsFollowed(id, false));
-            if (!data.resultCode)
-                dispatch(unfollow(id));
-        });
-}
+export const followTnunkCreator = id => dispatch => 
+    followUnfollowTC(dispatch, id, follow, UsersAxios.follow)
+export const unfollowTnunkCreator = id =>   dispatch => 
+    followUnfollowTC(dispatch, id, unfollow, UsersAxios.unfollow)
+
 export default usersReducer;

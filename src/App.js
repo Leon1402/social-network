@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { compose } from 'redux';
+import store from './redux/reduxStore';
 import './App.css';
 import Loader from './common/Loader';
 import HeaderContainer from './Header/HeaderContainer';
@@ -18,20 +19,18 @@ class App extends React.Component {
     }
     render() {
         return (
-            <BrowserRouter >
-                <div className="App">
-                    <HeaderContainer />
-                    <Navbar />
-                    {this.props.initialized
-                    ?<div className='main'>
+            <div className="App">
+                <HeaderContainer />
+                <Navbar />
+                {this.props.initialized
+                    ? <div className='main'>
                         <Route path='/Profile/:id?' render={() => <ProfileContainer />} />
                         <Route path='/Dialogs' render={() => <DialogsContainer />} />
                         <Route path='/Users' render={() => <UsersContainer />} />
                         <Route path='/Login' render={() => <LoginContainer />} />
                     </div>
-                    :<Loader />}
-                </div>
-            </BrowserRouter>
+                    : <Loader />}
+            </div>
         );
     }
 
@@ -40,6 +39,14 @@ let mapStateToProps = state => ({
     initialized: state.app.initialized
 })
 
-export default compose(
+let AppContainer = compose(
     connect(mapStateToProps, { initialization }),
 )(App);
+
+export default (props) => {
+    return <Provider store={store}>
+        <BrowserRouter>
+            <AppContainer />
+        </BrowserRouter>
+    </Provider>
+}
