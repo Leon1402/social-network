@@ -1,0 +1,23 @@
+.pages {
+    margin: 20px;
+}
+.page {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid red;
+    cursor: pointer;
+    line-height: 30px;
+}
+.active {
+    font-weight: bold;
+    border: 2px solid black;
+}
+.button {
+    cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;      
+}

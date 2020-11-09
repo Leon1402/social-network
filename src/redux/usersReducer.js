@@ -96,7 +96,7 @@ export const getUsersThunkCreator = (pageSize, currentPage) => async dispatch =>
 
     dispatch(changeIsloading(false));
     dispatch(setUsers(data.items));
-    dispatch(setTotalCount(data.totalCount / 20));
+    dispatch(setTotalCount(data.totalCount));
     dispatch(setCurrentPage(currentPage))
 }
 export const followUnfollowTC = async (dispatch, id, func, apiMethod) => {
